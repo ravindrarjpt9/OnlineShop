@@ -14,14 +14,18 @@ public class InMemoryProductRepository implements ProductRepository {
 
 	private List<Product> listOfProducts = new ArrayList<Product>();
 	
-	@Override
-	public List<Product> getAllProducts() {
-		
-		Product pd = new Product("123", "Iphone 5S", new BigDecimal(500000), "Iphone 5s", "Apple", "Mobile",5000l, 100l, true, "Paytm copun");
+	public InMemoryProductRepository() {
+
+		Product pd = new Product("P1234", "Iphone 5S", new BigDecimal(500000), "Iphone 5s", "Apple", "Mobile",5000l, 100l, true, "Paytm copun");
 		Product pd1 = new Product("123", "Iphone 5S", new BigDecimal(500000), "Iphone 5s", "Apple", "Mobile",5000l, 100l, true, "Paytm copun");
 
 		listOfProducts.add(pd);
 		listOfProducts.add(pd1);
+	}
+	@Override
+	public List<Product> getAllProducts() {
+		
+		
 		return listOfProducts;
 
 	}
