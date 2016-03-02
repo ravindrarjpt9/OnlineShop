@@ -11,11 +11,11 @@
 		
 	<security:http auto-config="true">
 	<!-- This instructs Spring to intercept every web request that is received by the request path/products/add and only allows access to whichever user has the role of ROLE_ADMIN. -->
-		<security:intercept-url pattern="/" access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/products/*" access="ROLE_ADMIN" />
 		
 		
 		<security:form-login login-page="/login" 
-               default-target-url="/products"   
+               default-target-url="/products/add"   
                authentication-failure-url="/loginfailed"/>
         <security:logout logout-success-url="/logout" />
 	</security:http>
