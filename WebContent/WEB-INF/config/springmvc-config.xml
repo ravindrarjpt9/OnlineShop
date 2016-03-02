@@ -18,7 +18,7 @@
 		: Without <annotation-driven/>, the <resources/> elements will prevent any 
 		controller from being invoked. You don’t need an <annotation-driven/> element 
 		if you are not using resources elements. -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven enable-matrix-variables="true"/> <!-- enable matrix variable support by setting enable-matrix-variables to true  -->
 
 	<!--The<resources/> element tells Spring MVC which static resources need 
 		to be served independently from the dispatcher servlet. . The first makes 
@@ -33,4 +33,11 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	
+	<bean id= "messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	   <property name="basename" value="messages"/> <!--  this is the name of the property file that we created in  -->
+	</bean>
+	
+	
 </beans>
