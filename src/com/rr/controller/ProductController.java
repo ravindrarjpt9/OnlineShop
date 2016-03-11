@@ -1,21 +1,29 @@
 package com.rr.controller;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 import javax.jws.WebParam.Mode;
+import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.portlet.ModelAndView;
 
 import com.rr.domain.Product;
@@ -102,11 +110,31 @@ public class ProductController {
 		model.addAttribute("newProduct", newProduct);
 		return "addProduct";
 	}
+	@InitBinder
+	public void initialiseBinder(WebDataBinder binder) {
+		binder.setAllowedFields("productId","name","unitPrice","description","manufacturer","category","unitsInStock", "condition","productImage");
+	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String processAddNewProducatForm(@ModelAttribute("newProducat") Product newProduct)
-	{
-		productService.addProduct(newProduct);
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String processAddNewProductForm(@ModelAttribute("newProduct") Product productToBeAdded, ModelMap map, BindingResult result, HttpServletRequest request) {
+		String[] suppressedFields = result.getSuppressedFields();
+		
+		if (suppressedFields.length > 0) {
+			throw new RuntimeException("Attempting to bind disallowed fields: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+		}
+		
+		MultipartFile productImage = productToBeAdded.getProductImage();
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+				
+			if (productImage!=null && !productImage.isEmpty()) {
+		       try {
+		      	productImage.transferTo(new File(rootDirectory+"resources\\images\\"+productToBeAdded.getProductId() + ".png"));
+		       } catch (Exception e) {
+				throw new RuntimeException("Product Image saving failed", e);
+		   }
+		   }
+
+				productService.addProduct(productToBeAdded);
 		return "redirect:/products"; // This pattern is calledRedirect After Post,
 	}
 	

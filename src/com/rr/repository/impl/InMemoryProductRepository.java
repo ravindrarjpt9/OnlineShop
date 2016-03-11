@@ -23,9 +23,9 @@ public class InMemoryProductRepository implements ProductRepository {
 		Product pd = new Product("P1234", "Iphone 5S", new BigDecimal(500000), "Iphone 5s", "Apple", "Mobile",5000l, 100l, true, "Paytm copun");
 		Product pd1 = new Product("123", "Ipod", new BigDecimal(500000), "Ipad Mini", "Apple", "Tablet",5000l, 100l, true, "Paytm copun");
 
-		Product pd2 = new Product("122", "Nexus 5", new BigDecimal(500000), "Googel Nexus 5", "Googel", "Mobile",5000l, 100l, true, "Paytm copun");
+		Product pd2 = new Product("P1235", "Nexus 5", new BigDecimal(500000), "Googel Nexus 5", "Googel", "Mobile",5000l, 100l, true, "Paytm copun");
 
-		Product pd3 = new Product("121", "Sony X-P", new BigDecimal(500000), "Sony X-Perya", "Sony", "Tablet",5000l, 100l, true, "Paytm copun");
+		Product pd3 = new Product("P1236", "Sony X-P", new BigDecimal(500000), "Sony X-Perya", "Sony", "Tablet",5000l, 100l, true, "Paytm copun");
 
 		Product pd4 = new Product("120", "ZOLO", new BigDecimal(500000), "ZOLO Mobile", "ZOLO", "Mobile",5000l, 100l, true, "Snapdeal copun");
 
